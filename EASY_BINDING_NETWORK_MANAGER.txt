@@ -1,0 +1,43 @@
+Installing on Linux Mint 18(Kernel 4.4.0-43-generic) for UsbStick Adapter TPLINK T2UH AC600
+
+After some problems installing that module on Linux Mint 18 and search for solution and not found in any local one solution I have resolved my problem with simple steps because I have observed some details and differences with Ubuntu based version install.
+
+I have decided share that for help any person searching for same solution and not found that.
+
+After you install that module the same is not activated and not binded on NetworkManager and you have follow some steps for complete install and activate that module:
+
+1) Edit file sudo nano /etc/NetworkManager/NetworkManager.conf and change:
+from: 
+[ifupdown] 
+managed=false
+
+to: 
+[ifupdown] 
+managed=true
+
+2) Create one script with any name that you like. I have create that on /usr/local/bin/netscript and put on that script:
+#!/bin/sh 
+modprobe mt7650u_sta 
+ifconfig ra0 up 
+service NetworkManager restart
+
+3) Save script and change owner and permitions:
+sudo chown root /usr/local/bin/netscript 
+sudo chmod +x /usr/local/bin/netscript
+
+4) The more easy step for activate module on starting graphics environment(runlevel 2) is create one cron script and put in /etc/cron.d and in any restart for Linux Mint that module is activated.
+Post that I have created other script on /etc/cron.d/netscript and put that content on it:
+SHELL=/bin/sh 
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+
+@reboot root netscript
+
+5) Save script and change owner and permitions:
+sudo chown root /etc/cron.d/netscript 
+sudo chmod +x /etc/cron.d/netscript
+
+6) Restart your Linux Mint and use your usbstick in full resources.
+If you get more rapid use, only execute on term that command:
+sudo netscript
+
+After much time searching solutions that resolved my problem and finally using Linux Mint 18 with TPLINK T2UH AC600 with 100% bandwidth.

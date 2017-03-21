@@ -1,0 +1,24 @@
+INSTRUCOES INSTALACAO TPLINK ADAPTER T2UH (AC600)
+
+Connect to internet by wire, then run in terminal
+
+sudo apt-get install git build-essential
+git clone https://github.com/Myria-de/mt7610u_wifi_sta_v3002_dpo_20130916.git
+cd mt7610u_wifi_sta_v3002_dpo_20130916
+make
+sudo make install
+sudo cp RT2870STA.dat  /etc/Wireless/RT2870STA/RT2870STA.dat
+Reboot.
+
+The dongle should work. The only problem is that you will have to re-install it after each kernel upgrade.
+
+But if you keep the driver folder mt7610u_wifi_sta_v3002_dpo_20130916, then it will be quite easy.
+
+You will need to run only
+
+cd mt7610u_wifi_sta_v3002_dpo_20130916
+make
+sudo make install
+after a kernel upgrade.
+
+It is also possible to install it using DKMS. In this case it will rebuild automatically on kernel upgrades.
